@@ -16,7 +16,7 @@
             <max_linear_acceleration>0.33</max_linear_acceleration>
 
             <!-- Input -->
-            <topic>cmd_vel</topic>
+            <topic>diff_cont/cmd_vel_unstamped</topic>
 
             
             <!-- Output -->
