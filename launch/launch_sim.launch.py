@@ -22,10 +22,24 @@ def generate_launch_description():
 
     package_name='my_bot' #<--- CHANGE ME
 
+    # Check if we're told to use sim time
+    use_sim_time = LaunchConfiguration('use_sim_time')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
+    
+    if use_sim_time == 'true' :
+        use_sim_time_bool = True 
+    else :
+        use_sim_time_bool = False
+    
+    if use_ros2_control == 'true' :
+        use_ros2_control_bool = True 
+    else :
+        use_ros2_control_bool = False
+
     rsp = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource([os.path.join(
                     get_package_share_directory(package_name),'launch','rsp.launch.py'
-                )]), launch_arguments={'use_sim_time': 'true', 'use_ros2_control': 'true'}.items()
+                )]), launch_arguments={'use_sim_time': use_sim_time, 'use_ros2_control': use_ros2_control}.items()
     )
 
 
@@ -92,7 +106,7 @@ def generate_launch_description():
     twist_stamper = Node(
         package='twist_stamper',
         executable='twist_stamper',
-        parameters=[{'use_sim_time': True}],
+        parameters=[{'use_sim_time': use_sim_time_bool}],
         remappings=[('/cmd_vel_in','cmd_vel'),
                     ('/cmd_vel_out','/diff_cont/cmd_vel')]
     )
@@ -101,6 +115,14 @@ def generate_launch_description():
 
     # Launch them all!
     return LaunchDescription([
+        DeclareLaunchArgument(
+            'use_sim_time',
+            default_value='true',
+            description='Use sim time if true'),
+        DeclareLaunchArgument(
+            'use_ros2_control',
+            default_value='true',
+            description='Use ros2_control if true'),
         rsp,
         world_arg,
         gazebo,
