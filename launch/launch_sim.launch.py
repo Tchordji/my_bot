@@ -89,6 +89,15 @@ def generate_launch_description():
         ]
     )
 
+    twist_stamper = Node(
+        package='twist_stamper',
+        executable='twist_stamper',
+        parameters=[{'use_sim_time': True}],
+        remappings=[('/cmd_vel_in','/diff_cont/cmd_vel_unstamped'),
+                    ('/cmd_vel_out','/diff_cont/cmd_vel')]
+    )
+
+
 
     # Launch them all!
     return LaunchDescription([
@@ -98,5 +107,6 @@ def generate_launch_description():
         spawn_entity,
         delayed_diff_drive_spawner,
         joint_broad_spawner,
-        ros_gz_bridge
+        ros_gz_bridge,
+        twist_stamper
     ])

@@ -11,7 +11,6 @@ controller_manager:
 
 diff_cont:
   ros__parameters:
-    use_stamped_vel : false
     publish_rate: 50.0
     base_frame_id: base_link
     left_wheel_names: ['left_wheel_joint']
