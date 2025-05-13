@@ -93,7 +93,7 @@ def generate_launch_description():
         package='twist_stamper',
         executable='twist_stamper',
         parameters=[{'use_sim_time': True}],
-        remappings=[('/cmd_vel_in','/diff_cont/cmd_vel_unstamped'),
+        remappings=[('/cmd_vel_in','cmd_vel'),
                     ('/cmd_vel_out','/diff_cont/cmd_vel')]
     )
 
